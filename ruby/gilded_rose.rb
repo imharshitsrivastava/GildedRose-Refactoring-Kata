@@ -34,6 +34,8 @@ def set_item_quality(item)
     if item.name != "Sulfuras, Hand of Ragnaros"
       if item.name != "Conjured Mana Cake"
         item.quality = item.quality - 1
+      else
+        item.quality = item.quality - 2 # conjured items decreses quality by 2
       end
     end
   end
@@ -46,6 +48,10 @@ def set_item_quality_after_sale(item)
         if item.quality > 0
           if item.name != "Sulfuras, Hand of Ragnaros"
             item.quality = item.quality - 1
+            # add functionality for conjured items
+            if item.name == "Conjured Mana Cake"
+              item.quality = item.quality - 1
+            end
           end
         end
       else
