@@ -137,6 +137,25 @@ describe GildedRose do
         expect(items.first.to_s).to eq "Sulfuras, Hand of Ragnaros, 0, 80"
       end
     end
-  end
 
+    context "when item name is Conjured Mana Cake" do
+      it "decreases quality by 2 and sell in by 1" do
+        items = [Item.new("Conjured Mana Cake", 12, 12)]
+        GildedRose.new(items).update_quality()
+        expect(items.first.to_s).to eq "Conjured Mana Cake, 11, 10"
+      end
+
+      it "checks for quality to never be less than 0" do
+        items = [Item.new("Conjured Mana Cake", 12, 0)]
+        GildedRose.new(items).update_quality()
+        expect(items.first.to_s).to eq "Conjured Mana Cake, 11, 0"
+      end
+
+      it "decreases quality by 4 when sell in value reaches 0" do
+        items = [Item.new("Conjured Mana Cake", 0, 12)]
+        GildedRose.new(items).update_quality()
+        expect(items.first.to_s).to eq "Conjured Mana Cake, -1, 8"
+      end
+    end
+  end
 end
