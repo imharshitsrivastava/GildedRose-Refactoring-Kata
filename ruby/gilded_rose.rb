@@ -11,11 +11,11 @@ class GildedRose
         set_item_quality(item)
       else
         if item.quality < 50
-          item.quality = item.quality + 1
+          increase_item_quality(item)
           if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            item.quality = item.quality + 1 if item.sell_in < 11 # sell in value less than 11 and quality increases by 2 when there are 10 days or less
+            increase_item_quality(item) if item.sell_in < 11 # sell in value less than 11 and quality increases by 2 when there are 10 days or less
             if item.sell_in < 6 # sell in value less than 6 and quality increases by 3 when there are 5 days or less
-              item.quality = item.quality + 1 if item.sell_in < 6
+              increase_item_quality(item)
             end
           end
         end
@@ -24,6 +24,10 @@ class GildedRose
       # set item quality when sell in is less than zero
       set_item_quality_after_sale(item)
     end
+  end
+
+  def increase_item_quality(item)
+    item.quality += 1 unless item.quality >= 50 # quality of item never more than 50
   end
 end
 
